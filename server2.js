@@ -36,7 +36,10 @@ io.on('connection',(socket)=>{
         })
         socket.on('connected-user-data',(data)=>{
             console.log(data,users[data.toPeer],socket.id)
-            io.to(users[data.toPeer]).emit('receive-connected-user-data',data)
+            //setTimeout(()=>{
+                io.to(users[data.toPeer]).emit('receive-connected-user-data',data)
+            //},10000)
+            
             //socket.to(users[userId]).emit('receive-connected-user-data',data)
         })
         socket.on('send-msg',(msg,userName)=>{

@@ -1,9 +1,9 @@
 const express = require('express')
 const app = express()
-const PORT = 3005;
+
 const Http = require('http')
 const server = Http.createServer()
-
+const dotenv = require('dotenv')
 let users = {}
 const io = require('socket.io')(server,{
     cors: {
@@ -11,6 +11,8 @@ const io = require('socket.io')(server,{
         methods: ["GET", "POST"]
       }
 })
+dotenv.config()
+const PORT = process.env.PORT || 3005;
 
 io.on('connection',(socket)=>{
 

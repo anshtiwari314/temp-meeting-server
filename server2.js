@@ -1,9 +1,10 @@
 const express = require('express')
 const app = express()
-
+const path = require('path')
 const Http = require('http')
 const server = Http.createServer()
 const dotenv = require('dotenv')
+
 let users = {}
 const io = require('socket.io')(server,{
     cors: {
@@ -13,6 +14,16 @@ const io = require('socket.io')(server,{
 })
 dotenv.config()
 const PORT = process.env.PORT || 3005;
+
+app.use(express.static(path.join(__dirname,'dist')))
+app.use(express.json())
+app.use(express.urlencoded({extended:true}))
+console.log(path.join(__dirname,'dist','index.html'))
+app.get('/',(req,res)=>{
+    console.log('request coming',__dirname)
+    res.sendFile(path.join(__dirname,'dist','index.html'))
+})
+
 
 io.on('connection',(socket)=>{
 
@@ -43,6 +54,12 @@ io.on('connection',(socket)=>{
             //},10000)
             
             //socket.to(users[userId]).emit('receive-connected-user-data',data)
+        })
+        socket.on('camera-toggle-transmitter',(data)=>{
+            socket.broadcast.to(roomId).emit('camera-toggle-receiver',data)
+        })
+        socket.on('microphone-toggle-transmitter',(data)=>{
+            socket.broadcast.to(roomId).emit('microphone-toggle-receiver',data)
         })
         socket.on('send-msg',(msg,userName)=>{
             socket.broadcast.to(roomId).emit('receive-msg', msg,userName);

@@ -44,8 +44,8 @@ io.on('connection',(socket)=>{
             console.log('someone disconnect',userId)
             socket.broadcast.to(roomId).emit('user-disconnected', userId);
          })
-        socket.on('tab-close',(userId)=>{
-            socket.broadcast.to(roomId).emit('tab-close-remove-video', userId);
+        socket.on('tab-close',(data)=>{
+            socket.broadcast.to(roomId).emit('tab-close-remove-video', data);
         })
         socket.on('connected-user-data',(data)=>{
             console.log(data,users[data.toPeer],socket.id)
@@ -63,6 +63,17 @@ io.on('connection',(socket)=>{
         })
         socket.on('send-msg',(msg,userName)=>{
             socket.broadcast.to(roomId).emit('receive-msg', msg,userName);
+        })
+        socket.on('user-chat-transmitter',(data)=>{
+            //console.log(data,users[data.toPeer],socket.id)
+            //setTimeout(()=>{
+                io.to(users[data.toPeer]).emit('user-chat-receiver',data)
+            //},10000)
+            
+            //socket.to(users[userId]).emit('receive-connected-user-data',data)
+        })
+        socket.on('screen-share-transmitter',(data)=>{
+            socket.broadcast.to(roomId).emit('screen-share-receiver', data);
         })
     })
 

@@ -61,8 +61,8 @@ io.on('connection',(socket)=>{
         socket.on('microphone-toggle-transmitter',(data)=>{
             socket.broadcast.to(roomId).emit('microphone-toggle-receiver',data)
         })
-        socket.on('send-msg',(msg,userName)=>{
-            socket.broadcast.to(roomId).emit('receive-msg', msg,userName);
+        socket.on('send-msg',(msg)=>{
+            socket.broadcast.to(roomId).emit('receive-msg', msg);
         })
         socket.on('user-chat-transmitter',(data)=>{
             //console.log(data,users[data.toPeer],socket.id)

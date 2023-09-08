@@ -74,6 +74,9 @@ io.on('connection',(socket)=>{
             
             //socket.to(users[userId]).emit('receive-connected-user-data',data)
         })
+        socket.on('single-screen-share-transmitter',(data)=>{
+                io.to(users[data.toPeer]).emit('single-screen-share-receiver',data)
+        })
         socket.on('screen-share-transmitter',(data)=>{
             socket.broadcast.to(roomId).emit('screen-share-receiver', data);
         })

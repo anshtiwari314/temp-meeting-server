@@ -61,8 +61,10 @@ io.on('connection',(socket)=>{
         socket.on('microphone-toggle-transmitter',(data)=>{
             socket.broadcast.to(roomId).emit('microphone-toggle-receiver',data)
         })
-        socket.on('send-msg',(msg)=>{
-            socket.broadcast.to(roomId).emit('receive-msg', msg);
+        socket.on('send-msg',(data)=>{
+            
+            socket.broadcast.to(roomId).emit('receive-msg', data);
+
         })
         socket.on('user-chat-transmitter',(data)=>{
             //console.log(data,users[data.toPeer],socket.id)
@@ -74,6 +76,9 @@ io.on('connection',(socket)=>{
         })
         socket.on('screen-share-transmitter',(data)=>{
             socket.broadcast.to(roomId).emit('screen-share-receiver', data);
+        })
+        socket.on('screen-share-end-transmitter',(data)=>{
+            socket.broadcast.to(roomId).emit('screen-share-end-receiver', data);
         })
     })
 

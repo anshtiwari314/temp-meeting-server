@@ -66,6 +66,9 @@ io.on('connection',(socket)=>{
             socket.broadcast.to(roomId).emit('receive-msg', data);
 
         })
+        socket.on('to-leave-page-transmitter',(id)=>{
+            socket.broadcast.to(roomId).emit('to-leave-page-receiver', id);
+        })
         socket.on('user-chat-transmitter',(data)=>{
             //console.log(data,users[data.toPeer],socket.id)
             //setTimeout(()=>{

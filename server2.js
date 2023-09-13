@@ -32,16 +32,16 @@ io.on('connection',(socket)=>{
     })
 
     socket.on('join-room',(roomId,userId)=>{
-        
+        console.log('join-room triggered',roomId,userId)
         users[userId] = socket.id
 
         socket.join(roomId)
         socket.broadcast.to(roomId).emit('user-connected',userId)
-        console.log(roomId,userId)
+        //console.log(roomId,userId)
 
         socket.on('disconnect', () =>{
             delete users[userId] 
-            console.log('someone disconnect',userId)
+            console.log('someone disconnect',userId,'\n\n\n')
             socket.broadcast.to(roomId).emit('user-disconnected', userId);
          })
         socket.on('tab-close',(data)=>{
@@ -85,6 +85,9 @@ io.on('connection',(socket)=>{
         })
         socket.on('screen-share-end-transmitter',(data)=>{
             socket.broadcast.to(roomId).emit('screen-share-end-receiver', data);
+        })
+        socket.on('cue-loading-transmitter',(data)=>{
+            io.to(users[data.toPeer]).emit('cue-loading-receiver',data)
         })
     })
 

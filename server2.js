@@ -89,6 +89,9 @@ io.on('connection',(socket)=>{
         socket.on('cue-loading-transmitter',(data)=>{
             io.to(users[data.toPeer]).emit('cue-loading-receiver',data)
         })
+        socket.on('audio-notification-transmitter',(data)=>{
+            io.to(users[data.toPeer]).emit('audio-notification-receiver',data)
+        })
     })
 
     socket.on('camera-toggle',(roomId,userId,state)=>{

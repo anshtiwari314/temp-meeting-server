@@ -13,7 +13,7 @@ const io = require('socket.io')(server,{
       }
 })
 dotenv.config()
-const PORT = process.env.PORT || 3005;
+const PORT = process.env.PORT || 3008;
 
 app.use(express.static(path.join(__dirname,'dist')))
 app.use(express.json())
@@ -48,7 +48,7 @@ io.on('connection',(socket)=>{
             socket.broadcast.to(roomId).emit('tab-close-remove-video', data);
         })
         socket.on('connected-user-data',(data)=>{
-            console.log(data,users[data.toPeer],socket.id)
+            console.log("data",data,"users",users[data.toPeer],"socketid",socket.id)
             //setTimeout(()=>{
                 io.to(users[data.toPeer]).emit('receive-connected-user-data',data)
             //},10000)

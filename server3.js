@@ -22,7 +22,8 @@ const io = new Server(server);
 dotenv.config()
 const PORT = process.env.PORT || 3008;
 
-app.use(express.static(path.join(__dirname,'dist')))
+//app.use(express.static(path.join(__dirname,'dist')))
+
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 console.log(path.join(__dirname,'dist','index.html'))

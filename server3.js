@@ -25,8 +25,9 @@ const PORT = process.env.PORT || 3008;
 //app.use(express.static(path.join(__dirname,'dist')))
 
 app.use(express.json())
+app.use(cors({origin:'*'}))
 app.use(express.urlencoded({extended:true}))
-console.log(path.join(__dirname,'dist','index.html'))
+//console.log(path.join(__dirname,'dist','index.html'))
 app.get('/',(req,res)=>{
     console.log('request coming',__dirname)
     res.sendFile(path.join(__dirname,'dist','index.html'))

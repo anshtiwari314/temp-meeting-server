@@ -13,7 +13,7 @@ const io = require('socket.io')(server,{
       }
 })
 dotenv.config()
-const PORT = process.env.PORT || 3008;
+const PORT = process.env.PORT || 3005;
 
 app.use(express.static(path.join(__dirname,'dist')))
 app.use(express.json())

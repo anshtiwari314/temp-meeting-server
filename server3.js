@@ -6,6 +6,7 @@ const cors = require('cors')
 //const server = Http.createServer()
 const dotenv = require('dotenv')
 const { Server } = require("socket.io");
+const ExpressPeerServer = require('peer').ExpressPeerServer;
 
 const server = Http.createServer(app);
 
@@ -25,8 +26,10 @@ const io = new Server(server,{
       }
 });
 
+
 dotenv.config()
-const PORT = process.env.PORT || 3008;
+const PORT = process.env.PORT || 3005;
+
 
 //app.use(express.static(path.join(__dirname,'dist')))
 
@@ -34,11 +37,16 @@ app.use(express.json())
 app.use(cors({origin:'*'}))
 app.use(express.urlencoded({extended:true}))
 //console.log(path.join(__dirname,'dist','index.html'))
+
+let options={
+    debug: true
+  }
+
 app.get('/',(req,res)=>{
     console.log('request coming',__dirname)
     res.sendFile(path.join(__dirname,'dist','index.html'))
 })
-
+app.use('/peerjs', ExpressPeerServer(server, options));
 
 io.on('connection',(socket)=>{
 

@@ -2,38 +2,23 @@ const express = require('express')
 const app = express()
 const path = require('path')
 const Http = require('http')
-const cors = require('cors')
-//const server = Http.createServer()
+const server = Http.createServer(app)
 const dotenv = require('dotenv')
-const { Server } = require("socket.io");
-
-const server = Http.createServer(app);
-
 
 let users = {}
-// const io = require('socket.io')(server,{
-//     cors: {
-//         origin: "*",
-//         methods: ["GET", "POST"]
-//       }
-// })
-
-const io = new Server(server,{
+const io = require('socket.io')(server,{
     cors: {
         origin: "*",
         methods: ["GET", "POST"]
       }
-});
-
+})
 dotenv.config()
 const PORT = process.env.PORT || 3008;
 
-//app.use(express.static(path.join(__dirname,'dist')))
-
+app.use(express.static(path.join(__dirname,'dist')))
 app.use(express.json())
-app.use(cors({origin:'*'}))
 app.use(express.urlencoded({extended:true}))
-//console.log(path.join(__dirname,'dist','index.html'))
+console.log(path.join(__dirname,'dist','index.html'))
 app.get('/',(req,res)=>{
     console.log('request coming',__dirname)
     res.sendFile(path.join(__dirname,'dist','index.html'))

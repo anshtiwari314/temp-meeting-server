@@ -1,13 +1,8 @@
 {
-    "builds": [
-    {
-      "src": "server3.js",
-      "use": "@vercel/node"
-    }
-  ],
+   
     "headers": [
         {
-            "source": "server3.js",
+            "source": "/(.*)",
             "headers": [
                 {
                     "key": "Access-Control-Allow-Credentials",

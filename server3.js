@@ -18,7 +18,12 @@ let users = {}
 //       }
 // })
 
-const io = new Server(server);
+const io = new Server(server,{
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST"]
+      }
+});
 
 dotenv.config()
 const PORT = process.env.PORT || 3008;

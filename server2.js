@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const path = require('path')
 const Http = require('http')
-const server = Http.createServer()
+const server = Http.createServer(app)
 const dotenv = require('dotenv')
 
 let users = {}
